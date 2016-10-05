@@ -16,3 +16,21 @@ body {
     font-size: large;
 }
 
+.part-add, .part-remove {
+    text-align: center;
+}
+
+
+.color-indicator {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    vertical-align: -3.6px;
+}
+
+.form-done {
+    margin-top: 20px;
+}
+
+

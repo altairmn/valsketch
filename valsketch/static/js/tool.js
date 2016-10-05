@@ -1,43 +1,107 @@
 /* jshint esversion: 6 */
 
-class Tool {
-    constructor(id) {
-        $( "span.part-add" ).on("click", function(eventObject) {
-            Tool.activePath = new paper.Path(); 
+class Sketch {
+    constructor(drawTool, panTool) {
+        Sketch.activePath = null;
+        Sketch.activePart = null;
+        Sketch.drawTool = drawTool;
+        Sketch.panTool = panTool;
+        var self = this;
+
+        $( "div.part-add" ).on("click", function(eventObject) {
             var element = $( this );
-            Tool.activePart = {
+            Sketch.activePart = {
                 parent : element.parent("div.part-container").eq(0),
-                part_name : element.siblings(".part-name").eq(0),
+                part_name : element.siblings(".part-name").eq(0).text().trim(),
                 status : element.siblings(".part-status").eq(0),
-                color : element.siblings(".part-color").eq(0),
+                color : element.siblings(".part-color").eq(0).attr('id'),
             };
+
+            self.setup();
         });
 
-        $( "span.part-remove" ).on("click", function(eventObject) {
-            
+
+        $( "div.part-remove" ).on("click", function(eventObject) {
+           var element = $( this ); 
+           var part_name = self.get_part_name(element);
+           if(Sketch.partPaths[part_name].length > 0) {
+               var part_path = Sketch.partPaths[part_name].pop();
+               part_path.remove();
+               self.decstatus(part_name);
+            }
         });
 
         $( "#delete-button").on("click", function(eventObject) {
-            Tool.activePath.remove();
+            if (Sketch.activePath !== null) {
+                Sketch.activePath.remove();
+                Sketch.activePath = null;
+            }
         });
 
         $( "#complete-button").on("click", function(eventObject) {
-            Tool.activePath.close();
-            var part_container = Tool.activePart;
-            var part_status = part_container.children(".part-status")[0];
-            part_status = Number(part_status) + 1;
+            if (Sketch.activePath !== null) {
+                self.pprocess();
+                self.incstatus(Sketch.activePart.part_name);
+                self.disable();
+            }
         });
 
         $( "#undo-button").on("click", function(eventObject) {
-            Tool.activePath.lastSegment.remove();
+            if (Sketch.activePath !== null) {
+                Sketch.activePath.lastSegment.remove();
+            }
+            if (Sketch.activePath.segments.length === 0) {
+                self.disable();
+            }
         });
 
         /* setup the part paths object */
-        Tool.partPaths = {};
-        $('.part-name').each(function(index, element) {
-
+        Sketch.partPaths = {};
+        $( "div.part-name" ).each(function() {
+            Sketch.partPaths[$(this).text().trim()] = [];
         });
     } 
+
+    setup() {
+        $( "#draw-button").removeAttr("disabled");
+        $( "#complete-button").removeAttr("disabled");
+        $( "#delete-button").removeAttr("disabled");
+        $( "#undo-button").removeAttr("disabled");
+        Sketch.drawTool.activate();
+    }
+
+    pprocess() {
+        Sketch.activePath.closePath();
+        Sketch.activePath.reduce();
+        Sketch.activePath.selected = false;
+        Sketch.partPaths[Sketch.activePart.part_name].push(Sketch.activePath);
+    }
+
+    incstatus(part_name) {
+        var id = '#' + part_name + '-status';
+        var part_status = $(id).eq(0);
+        part_status.text(Number(part_status.text().trim()) + 1);
+    }
+
+    decstatus(part_name) {
+        var id = '#' + part_name + '-status';
+        var part_status = $(id).eq(0);
+        part_status.text(Number(part_status.text().trim()) - 1);
+    }
+
+    get_part_name(element) {
+        return element.siblings(".part-name").eq(0).text().trim();
+    }
+
+    disable() {
+        $( "#draw-button").attr("disabled", "disabled");
+        $( "#complete-button").attr("disabled", "disabled");
+        $( "#delete-button").attr("disabled", "disabled");
+        $( "#undo-button").attr("disabled", "disabled");
+        Sketch.activePath = null;
+        Sketch.panTool.activate();
+    }
+
 
 }
 

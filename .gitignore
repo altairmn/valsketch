@@ -2,5 +2,6 @@ bootstrap*
 
 *.pyc
 valsketch/static/sketches_svg
+valsketch/static/sketches_svg_backup
 valsketch/static/svg
 valsketch/test

@@ -6,8 +6,10 @@ import numpy.random as random
 import os
 import json
 from jinja2 import Markup
+import randomcolor
 
 views = Blueprint('views', __name__, url_prefix='')
+rand_color = randomcolor.RandomColor();
 
 
 @views.route('/')
@@ -31,8 +33,8 @@ def signup():
 @views.route('/tool')
 def tool():
     sketch_file = random.choice(file_list)
-    sketch_meta = get_sketch_meta(sketch_file)
-    return render_template('tool.html', sketch_meta=sketch_meta)
+    sketch_meta, colors = get_sketch_meta(sketch_file)
+    return render_template('tool.html', sketch_meta=sketch_meta, colors=colors)
     return 'tool'
 
 
@@ -40,9 +42,11 @@ def get_sketch_meta(fname):
     cat_name = os.path.dirname(fname)
     with open(os.path.join(current_app.root_path, 'static/sketches_svg', fname)) as sketch_file:
         svg = sketch_file.read();
+        colors = rand_color.generate(count = len(part_list[cat_name]))
 
-    return {'parts': part_list[cat_name],
-            'svg'  : Markup(svg) }
+    return ({'parts' : part_list[cat_name],
+            'svg'   : Markup(svg),
+            'category': cat_name.capitalize()}, colors)
 
 
 # fb client id: 853753161392782
