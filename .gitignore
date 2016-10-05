@@ -1,0 +1,6 @@
+bootstrap*
+
+*.pyc
+valsketch/static/sketches_svg
+valsketch/static/svg
+valsketch/test

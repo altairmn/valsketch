@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div id="part-list" class="col-sm-3 text-center">
+        {% for part_name in sketch_meta['parts'] %}
+        <div class="row">
+          <div id="{{ part_name }}-container" class="part-container">
+              <div id="{{ part_name }}-status"
+                  class="part-status col-sm-2">0</div>
+              <div class="col-sm-6">
+                <button type="button" class="btn btn-default btn-md">
+                  <span class="part-name">
+                    {{ part_name }}
+                  </span>
+                </button>
+              </div>
+              <div class="part-add col-sm-2" id="add-{{ part_name }}">
+                <button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-plus"></span></button>
+              </div>
+              <div class="part-remove col-sm-2" id="remove-{{ part_name }}">
+                <button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-minus"></span></button>
+              </div>
+              <span class="part-color-active" id="#faqece"></span>
+              <span class="part-color-inactive" id="#faq012"></span>
+          </div>
+      </div>
+        {% endfor %}
+      </div>
+    </div>
+
+      <div style="display: none">
+      {{ sketch_meta['svg'] }}
+      </div>
+  </div>
+
+
+{% endblock %}
