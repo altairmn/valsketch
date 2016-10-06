@@ -35,6 +35,7 @@ class Sketch {
             if (Sketch.activePath !== null) {
                 Sketch.activePath.remove();
                 Sketch.activePath = null;
+                disable();
             }
         });
 
@@ -51,6 +52,7 @@ class Sketch {
                 Sketch.activePath.lastSegment.remove();
             }
             if (Sketch.activePath.segments.length === 0) {
+                Sketch.activePath.remove();
                 self.disable();
             }
         });

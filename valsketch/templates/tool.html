@@ -50,10 +50,11 @@
             {% endfor %}
         </div>
       </div>
+
       <div class="row">
         <div class="col-sm-12">
-          <form action="{{ url_for('views.tool') }}" class="form-done" method="POST">
-            <button class="btn btn-lg btn-success btn-block" type="submit">Done</button>
+          <form action="{{ url_for('views.tool') }}" id="form-done" method="POST">
+            <button class="btn btn-lg btn-success" type="submit">Done</button>
           </form>
         </div>
       </div>
@@ -82,4 +83,5 @@
     </script>
     <script src="{{ url_for('static', filename='js/tool.js') }}"></script>
     <script src="{{ url_for('static', filename='js/draw.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/data_submit.js') }}"></script>
 {% endblock %}

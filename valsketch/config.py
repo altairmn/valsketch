@@ -6,7 +6,7 @@ import json, os
 class Config(object):
     DEBUG = False
     TESTING = False
-    DATABASE_URI = 'sqlite://:memory:'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
     WTF_CSRF_SECRET_KEY = 'app_forms_key'
     SECRET_KEY = 'secret-key'
 

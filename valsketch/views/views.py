@@ -30,12 +30,13 @@ def signup():
         return redirect(url_for('views.signin'))
     return render_template('signup.html', active='signup', form=form);
 
-@views.route('/tool')
+@views.route('/tool', methods=['GET', 'POST'])
 def tool():
+    if request.method == 'POST':
+        print(request.form);
     sketch_file = random.choice(file_list)
     sketch_meta, colors = get_sketch_meta(sketch_file)
     return render_template('tool.html', sketch_meta=sketch_meta, colors=colors)
-    return 'tool'
 
 
 def get_sketch_meta(fname):

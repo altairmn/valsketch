@@ -20,7 +20,6 @@ class User(UserMixin, db.Model):
     def __init__(self, name, email):
         self.name = name
         self.email = email
-        self.age = age
 
     def __repr__(self):
         return '<User %s, Email %s>' % (self.name, self.email)
