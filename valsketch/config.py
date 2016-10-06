@@ -6,12 +6,13 @@ import json, os
 class Config(object):
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///testing.db'
     WTF_CSRF_SECRET_KEY = 'app_forms_key'
     SECRET_KEY = 'secret-key'
 
 class ProductionConfig(Config):
-    DATABASE_URI = 'psql'
+    RECAPTCHA_PUBLIC_KEY = '6Ld1QggUAAAAAC-4NBw4BYesnQ_ykoYMnylT5WGA'
+    RECAPTCHA_PRIVATE_KEY = '6Ld1QggUAAAAABEHsa_1tnBQ3a7k1rSfl8_K698Y'
 
 class DevelopmentConfig(Config):
     DEBUG = True

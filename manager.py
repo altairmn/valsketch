@@ -12,7 +12,7 @@ env = os.environ.get('APPNAME_ENV', 'development')
 app = create_app('valsketch.config.%sConfig' % env.capitalize())
 
 manager = Manager(app)
-manager.add_command("server", Server())
+manager.add_command("server", Server(threaded=True))
 manager.add_command("show-urls", ShowUrls())
 manager.add_command("clean", Clean())
 

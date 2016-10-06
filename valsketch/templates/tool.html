@@ -54,7 +54,9 @@
       <div class="row">
         <div class="col-sm-12">
           <form action="{{ url_for('views.tool') }}" id="form-done" method="POST">
-            <button class="btn btn-lg btn-success" type="submit">Done</button>
+            <button class="btn btn-lg btn-success btn-block" type="submit">Done</button>
+            <input type="hidden" value="{{ sketch_file }}" name="sketch_file" />
+            <input type="hidden" value="{{ sketch_meta['category'] }}" name="sketch_category" />
           </form>
         </div>
       </div>

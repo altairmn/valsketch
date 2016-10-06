@@ -59,9 +59,14 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li {% if active == "index" %} class="active" {% endif %}><a href="{{ url_for('views.index') }}">Home</a></li>
-              <li {% if active == "signin" %} class="active" {% endif %}><a href="{{ url_for('views.signin') }}">Sign In</a></li>
-              <li {% if active == "signup" %} class="active" {% endif %}><a href="{{ url_for('views.signup') }}">Sign Up</a></li>
-              <li {% if active == "tool" %} class="active" {% endif %}><a href="{{ url_for('views.tool') }}">Tool</a></li>
+              {% if current_user.is_authenticated %}
+                  <li {% if active == "dashboard" %} class="active" {% endif %}><a href="{{ url_for('views.dashboard') }}">{{ current_user.username }}</a></li>
+                  <li {% if active == "tool" %} class="active" {% endif %}><a href="{{ url_for('views.tool') }}">Tool</a></li>
+                  <li><a href="{{ url_for('views.logout') }}">Logout</a></li>
+              {% else %}
+                  <li {% if active == "signin" %} class="active" {% endif %}><a href="{{ url_for('views.signin') }}">Sign In</a></li>
+                  <li {% if active == "signup" %} class="active" {% endif %}><a href="{{ url_for('views.signup') }}">Sign Up</a></li>
+              {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
