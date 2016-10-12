@@ -46,7 +46,7 @@ def signup():
 @views.route('/tool', methods=['GET', 'POST'])
 @login_required
 def tool():
-    if current_user.annotations.count() == current_user.annotation_limit:
+    if current_user.annotations.count() >= current_user.annotation_limit:
         redirect(url_for('views.logout'))
     if request.method == 'POST':
         annotation = process_request(request.form)
