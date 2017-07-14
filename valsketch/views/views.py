@@ -65,6 +65,7 @@ def logout():
 
 
 def get_sketch_meta(fname):
+    fname = fname.strip();
     cat_name = os.path.dirname(fname)
     with open(os.path.join(current_app.root_path, 'static/sketches_svg', fname)) as sketch_file:
         svg = sketch_file.read();
